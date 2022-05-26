@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\User;
 use Illuminate\Http\Request;
 
 class GroupsController extends Controller
@@ -17,7 +18,7 @@ class GroupsController extends Controller
         $groups = Group::where(function ($query) {
             $query->where('name', 'like', '%'.request('q').'%');
         })
-            ->where('creator_id', auth()->id())
+            ->where('creator_id', User::findOrFail(1)->id)
             ->withCount('members')
             ->paginate();
 
@@ -53,7 +54,7 @@ class GroupsController extends Controller
             'payment_amount' => 'required|numeric',
             'description'    => 'nullable|max:255',
         ]);
-        $newGroup['creator_id'] = auth()->id();
+        $newGroup['creator_id'] = User::findOrFail(1)->id;
 
         $group = Group::create($newGroup);
 

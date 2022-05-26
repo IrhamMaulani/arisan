@@ -13,12 +13,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $groups = auth()->user()->groups;
+        $groups = User::findOrFail(1)->groups;
         $membershipIds = [];
         foreach ($groups as $group) {
             $membershipIds[$group->id] = $group->pivot->id;
         }
-        $outstandingPayments = $this->getUserOutstandingPayments(auth()->user());
+        $outstandingPayments = $this->getUserOutstandingPayments(User::findOrFail(1));
 
         return view('home', compact('groups', 'membershipIds', 'outstandingPayments'));
     }

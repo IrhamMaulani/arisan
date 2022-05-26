@@ -3,14 +3,14 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="row">
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{ __('nav_menu.your_groups') }}</h3>
-            </div>
-            <table class="table table-condensed">
-                <thead>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ __('nav_menu.your_groups') }}</h3>
+                </div>
+                <table class="table table-condensed">
+                    <thead>
                     <tr>
                         <th class="text-center">{{ trans('app.table_no') }}</th>
                         <th>{{ trans('group.name') }}</th>
@@ -18,30 +18,32 @@
                         <th class="text-right">{{ trans('group.payment_amount') }}</th>
                         <th class="text-center">{{ trans('app.status') }}</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     @forelse($groups as $key => $group)
-                    <tr>
-                        <td class="text-center">{{ 1 + $key }}</td>
-                        <td>{{ $group->nameLink() }}</td>
-                        <td class="text-center">{{ $group->members_count }}</td>
-                        <td class="text-right">{{ $group->currency }} {{ formatNo($group->payment_amount) }}</td>
-                        <td class="text-center">{{ $group->status }}</td>
-                    </tr>
+                        <tr>
+                            <td class="text-center">{{ 1 + $key }}</td>
+                            <td>{{ $group->nameLink() }}</td>
+                            <td class="text-center">{{ $group->members_count }}</td>
+                            <td class="text-right">{{ $group->currency }} {{ formatNo($group->payment_amount) }}</td>
+                            <td class="text-center">{{ $group->status }}</td>
+                        </tr>
                     @empty
-                    <tr><td colspan="5" class="text-center bg-warning">{{ __('group.empty') }}</td></tr>
+                        <tr>
+                            <td colspan="5" class="text-center bg-warning">{{ __('group.empty') }}</td>
+                        </tr>
                     @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{ __('nav_menu.your_outstanding_payments') }}</h3>
+                    </tbody>
+                </table>
             </div>
-            <table class="table table-condensed">
-                <thead>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ __('nav_menu.your_outstanding_payments') }}</h3>
+                </div>
+                <table class="table table-condensed">
+                    <thead>
                     <tr>
                         <th class="text-center">{{ trans('app.table_no') }}</th>
                         <th>{{ trans('group.name') }}</th>
@@ -49,10 +51,12 @@
                         <th class="text-right">{{ trans('payment.payment') }}</th>
                         <th class="text-center">{{ trans('app.status') }}</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     @if ($outstandingPayments->isEmpty())
-                        <tr><td colspan="5" class="text-center bg-warning">{{ __('user.no_outstanding_payment') }}</td></tr>
+                        <tr>
+                            <td colspan="5" class="text-center bg-warning">{{ __('user.no_outstanding_payment') }}</td>
+                        </tr>
                     @endif
                     @foreach($outstandingPayments->groupBy('group_id') as $groupId => $groupedMeetings)
                         @php
@@ -86,9 +90,9 @@
                         </tr>
 
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 @endsection
